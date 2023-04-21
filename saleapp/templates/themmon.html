@@ -1,0 +1,96 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Xem điểm {% endblock %}
+
+{% block css %}
+<link href="{{ url_for('static', filename='css/xemdiem.css') }}"
+      rel="stylesheet"/>
+{%endblock%}
+
+{% block content %}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+<div class="container"; style="margin-top: 135px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="d-flex justify-content-between">
+                   <div class="card-body" style="display:flex;flex-direction: column; width:50%">
+
+                            <h3 class="card-title text-uppercase mb-0" style="display:flex; font-weight:600; margin-right:30px"><span style="color:red;margin-right:10px">Tên: </span>  {{proFile.name}}</h3>
+                        <h3 class="card-title text-uppercase mb-0" style="display:flex;margin-top:10px"><span style="color:red;margin-right:10px">MSSV: </span> {{proFile.maSo}}</h3>
+
+                        <h3 class="card-title text mb-0"  style="display:flex;margin-top:10px"><span style="color:red;margin-right:10px">GPA: </span>{{proFile.gpa}}</h3>
+                        <h3 class="card-title text mb-0"  style="display:flex;margin-top:10px"><span style="color:red;margin-right:10px">Điểm hệ 10: </span>{{proFile.diemHeMuoi}}</h3>
+                    </div>
+<form class="form-inline mr-2" style="display: flex;
+    height: 40px;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 30px; margin-bottom:30px">
+                        <input name="mon" class="form-control mr-sm-2" type="search" placeholder="Mã môn, tên môn..."
+                               aria-label="Search" style="    padding: 10px;
+    width: 30%;
+    margin-right: 45px; font-size:15px;">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+                    </form>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table no-wrap user-table mb-0">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col" class="border-0 text-uppercase font-medium">Mã môn</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium">Tên môn</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium">Số tín chỉ</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium">Học kì</th>
+                            <th scope="col" class="border-0 text-uppercase font-medium">Quản trị</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%for i in range(n)%}
+                        <tr>
+                            <td>
+                                <span class="text-muted">{{monhoc[i].idString}}</span><br>
+                            </td>
+                            <td>
+                                <span class="text-muted">{{monhoc[i].name}}</span><br>
+                            </td>
+                            <td>
+                                <span class="text-muted">{{monhoc[i].soTinChi}}</span><br>
+                            </td>
+                            <td>
+                                 <span class="text-muted">{{hocKi[i].hocKi}} - {{hocKi[i].namHoc}}</span><br>
+                            </td>
+                            <td class="d-flex justify-content-between align-items-center">
+                                <form class="mx-auto" action="{{url_for('dangkimon', mon=monhoc[i].idString, hocki=hocKi[i].id)}}">
+                                    <button type="submit"
+                                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i
+                                            class="fa fa-plus"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between m-2">
+                        <a href="{{url_for('xemdiem', profile_id= proFile.maSo)}}" class="btn btn-secondary">Quay lại</a>
+                        <form action="/process" method="post">
+                            <button class="btn btn-primary mr-2" type="submit">Cập nhật điểm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+
+
+
+
+
+
+
